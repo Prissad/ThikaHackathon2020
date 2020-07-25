@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\DummyRepository;
+
+class DummyClass extends CrudController
+{
+
+    /**
+     * DummyClass constructor.
+     * @param DummyRepository $dummyRepository
+     */
+
+    public function __construct(DummyRepository $dummyRepository)
+    {
+        $relations = [];
+        $orderBy = [];
+        $conditions = [];
+        $nullConditions = [];
+        $whereInConditions = [];
+        $selectedAttributes = ['*'];
+        parent::__construct($dummyRepository, $relations, $orderBy, $conditions, $nullConditions, $whereInConditions, $selectedAttributes);
+    }
+}
