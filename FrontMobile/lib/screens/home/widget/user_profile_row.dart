@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_weighter/global/GlobalColor.dart';
 import 'package:flutter_weighter/model/user.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
 import 'package:flutter_weighter/screens/home/bloc/bloc_provider.dart';
@@ -16,25 +17,32 @@ class UserProfileRow extends StatelessWidget {
           double scroll = snapshot.hasData ? snapshot.data : 0;
 
           return Container(
-            height: MediaQuery.of(context).size.height * (0.25 + (scroll) * 0.1),
+            height:
+                MediaQuery.of(context).size.height * (0.25 + (scroll) * 0.1),
             child: Stack(
               children: <Widget>[
                 ClipPath(
                   clipper: ClippingClass(),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * (0.125 + (scroll) * 0.05),
-                    decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+                    height: MediaQuery.of(context).size.height *
+                        (0.125 + (scroll) * 0.05),
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).primaryColor),
                   ),
                 ),
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.center,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * (0.1 + (scroll) * 0.05),
-                      width: MediaQuery.of(context).size.height * (0.1 + (scroll) * 0.05),
+                      height: MediaQuery.of(context).size.height *
+                          (0.1 + (scroll) * 0.05),
+                      width: MediaQuery.of(context).size.height *
+                          (0.1 + (scroll) * 0.05),
                       child: InkWell(
                         onTap: () {
-                          HomeBlocProvider.of(context).pageNavigationSink.add(1);
+                          HomeBlocProvider.of(context)
+                              .pageNavigationSink
+                              .add(1);
                         },
                         child: CircularImageCard(
                           scale: scroll,
@@ -64,8 +72,10 @@ class UserProfileRow extends StatelessWidget {
           direction: Axis.vertical,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: <Widget>[
-            UserNameWidget('${user.name}', scale),
-            LastUpdatedTextWidget('${AppTranslations.of(context).text("last_updated")} ${user.last_updated}', scale),
+            UserNameWidget('Welcome', scale),
+            LastUpdatedTextWidget(
+                '${AppTranslations.of(context).text("last_connected")} 26-07-2020',
+                scale),
           ],
         );
       },
@@ -85,7 +95,8 @@ class UserNameWidget extends StatelessWidget {
       label,
       style: TextStyle(
           color: Colors.black,
-          fontSize: MediaQuery.of(context).size.shortestSide * (0.06 + (scale) * 0.01),
+          fontSize: MediaQuery.of(context).size.shortestSide *
+              (0.06 + (scale) * 0.01),
           fontWeight: FontWeight.w500),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -106,7 +117,8 @@ class LastUpdatedTextWidget extends StatelessWidget {
       label,
       style: Theme.of(context).textTheme.display1.copyWith(
           color: Colors.black,
-          fontSize: MediaQuery.of(context).size.shortestSide * (0.03 + (scale) * 0.005),
+          fontSize: MediaQuery.of(context).size.shortestSide *
+              (0.03 + (scale) * 0.005),
           fontWeight: FontWeight.w300),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,

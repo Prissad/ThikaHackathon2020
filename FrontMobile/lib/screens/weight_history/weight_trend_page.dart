@@ -84,11 +84,14 @@ class _CardItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: MediaQuery.of(context).size.shortestSide * 0.07),
+          padding: EdgeInsets.symmetric(
+              horizontal: 35.0,
+              vertical: MediaQuery.of(context).size.shortestSide * 0.07),
           child: Container(
             height: dotSize,
             width: dotSize,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).primaryColor),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: Theme.of(context).primaryColor),
           ),
         ),
         Expanded(
@@ -100,7 +103,9 @@ class _CardItem extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     '${weightHistory.weight.ceil().toInt()} ${AppTranslations.of(context).text("kg")}',
-                    style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.05),
+                    style: TextStyle(
+                        fontSize:
+                            MediaQuery.of(context).size.shortestSide * 0.05),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -109,14 +114,19 @@ class _CardItem extends StatelessWidget {
                           ? ''
                           : '${weightHistory.difference} ${AppTranslations.of(context).text("kg")}',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.04, color: Colors.grey),
+                      style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.shortestSide * 0.04,
+                          color: Colors.grey),
                     ),
                   )
                 ],
               ),
               Text(
                 '${weightHistory.date} ${AppTranslations.of(context).text("at")} ${weightHistory.time}',
-                style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
+                    color: Colors.grey),
               )
             ],
           ),

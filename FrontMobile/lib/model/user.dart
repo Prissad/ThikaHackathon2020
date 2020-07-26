@@ -20,6 +20,7 @@ class User {
   double fat_percentage;
   String created_date;
   String last_updated;
+  double currency = 200;
 
   User(
       {this.name,
@@ -30,7 +31,8 @@ class User {
       this.bmi,
       this.fat_percentage,
       this.created_date,
-      this.last_updated});
+      this.last_updated,
+      this.currency});
 
   factory User.fromJson(Map<String, dynamic> json) => new User(
         name: json["name"],
@@ -42,6 +44,7 @@ class User {
         fat_percentage: json["fat_percentage"],
         created_date: json["created_date"],
         last_updated: json["last_updated"],
+        currency: json["currency"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,5 +57,6 @@ class User {
         "fat_percentage": fat_percentage,
         "created_date": created_date,
         "last_updated": last_updated,
+        "currency": currency,
       };
 }

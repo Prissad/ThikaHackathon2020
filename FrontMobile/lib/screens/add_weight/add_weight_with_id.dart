@@ -14,14 +14,15 @@ import 'package:redux/redux.dart';
 import 'bloc/add_weight_bloc.dart';
 import 'bloc/bloc_provider.dart';
 
-class AddWeight extends StatefulWidget {
+class AddWeightID extends StatefulWidget {
   @override
   _AddWeightState createState() => _AddWeightState();
 }
 
-class _AddWeightState extends State<AddWeight> {
+class _AddWeightState extends State<AddWeightID> {
   AddWeightBloc _addWeightBloc;
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController nameController2 = TextEditingController();
 
   @override
   void initState() {
@@ -49,8 +50,8 @@ class _AddWeightState extends State<AddWeight> {
           _addWeightBloc.weight = /*user.weight*/ 15.5;
           return Column(
             children: <Widget>[
-              _TitleText(lastUpdated: "26-07-2020" /*user.last_updated*/),
               buildWeightCard(),
+              buildIDCard(),
               //_SelectedWeightText(),
               _UpdateButton(nameController: nameController)
             ],
@@ -79,6 +80,31 @@ class _AddWeightState extends State<AddWeight> {
         ),
         keyboardType: TextInputType.number,
         controller: nameController,
+      ),
+    );
+  }
+
+  buildIDCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: TextFormField(
+        style: TextStyle(
+            color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
+            fontSize: MediaQuery.of(context).size.shortestSide * 0.05,
+            letterSpacing: 1.2),
+        decoration: new InputDecoration(
+          border: InputBorder.none,
+          hintText: AppTranslations.of(context).text("amount_id_hint"),
+          helperStyle: TextStyle(
+              color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
+              fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
+              letterSpacing: 0.8),
+          errorStyle: TextStyle(
+              fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
+              letterSpacing: 0.8),
+        ),
+        keyboardType: TextInputType.number,
+        controller: nameController2,
       ),
     );
   }

@@ -33,7 +33,7 @@ const BLACK = "#000000";
 const WHITE = "#FFFFFF";
 
 //Theme colors
-const THEME_COLOR_RED = "#6e2142";
+const THEME_COLOR_RED = /*"#6e2142"*/ "#f83a53";
 const THEME_COLOR_BLUE = "#241663";
 const THEME_COLOR_GREEN = "#207561";
 const THEME_COLOR_YELLOW = "#560d0d";

@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _navigateToPage(int page) async {
-    _pageController.animateToPage(page, duration: Duration(milliseconds: 500), curve: Curves.linear);
+    _pageController.animateToPage(page,
+        duration: Duration(milliseconds: 500), curve: Curves.linear);
   }
 
   @override
@@ -53,7 +54,13 @@ class _HomePageState extends State<HomePage> {
         onWillPop: _onWillPop,
         child: Scaffold(
           body: Stack(
-            children: <Widget>[_buildPageView(), BMIBottomSheet(), _BackButton(), _SaveButton(), _SettingButton()],
+            children: <Widget>[
+              _buildPageView(),
+              BMIBottomSheet(),
+              _BackButton(),
+              _SaveButton(),
+              _SettingButton()
+            ],
           ),
         ),
       ),
@@ -78,7 +85,10 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, snapshot) {
                     double scroll = snapshot.hasData ? snapshot.data : 0;
                     return Padding(
-                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.15 * (1 - scroll)),
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height *
+                              0.15 *
+                              (1 - scroll)),
                       child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification notification) {
                           if (notification is ScrollUpdateNotification) {
@@ -113,7 +123,8 @@ class _BackButton extends StatelessWidget {
           builder: (context, snapshot) {
             double scroll = snapshot.hasData ? snapshot.data : 0;
             return Transform.translate(
-              offset: Offset(-MediaQuery.of(context).size.width * 0.15 * (1 - scroll), 0),
+              offset: Offset(
+                  -MediaQuery.of(context).size.width * 0.15 * (1 - scroll), 0),
               child: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
@@ -146,15 +157,18 @@ class _SaveButton extends StatelessWidget {
           builder: (context, snapshot) {
             double scroll = snapshot.hasData ? snapshot.data : 0;
             return Transform.translate(
-              offset: Offset(MediaQuery.of(context).size.width * 0.15 * (1 - scroll), 0),
+              offset: Offset(
+                  MediaQuery.of(context).size.width * 0.15 * (1 - scroll), 0),
               child: IconButton(
                   icon: Icon(
                     Icons.done,
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    if ((_bloc.editedHeight != 0 && _bloc.editedHeight != _bloc.currentUser.height) ||
-                        (_bloc.editedAge != 0 && _bloc.currentUser.age != _bloc.editedAge)) {
+                    if ((_bloc.editedHeight != 0 &&
+                            _bloc.editedHeight != _bloc.currentUser.height) ||
+                        (_bloc.editedAge != 0 &&
+                            _bloc.currentUser.age != _bloc.editedAge)) {
                       _bloc.saveUpdatedProfile();
                     } else {
                       Scaffold.of(context).showSnackBar(snackBar);
@@ -186,7 +200,8 @@ class _SettingButton extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(FadeRouteBuilder(page: SettingPage()));
+                    Navigator.of(context)
+                        .push(FadeRouteBuilder(page: SettingPage()));
                   }),
             );
           }),

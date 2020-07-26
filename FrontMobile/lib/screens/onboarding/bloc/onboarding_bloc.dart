@@ -19,6 +19,7 @@ class OnBoardingBloc {
   double height = 154;
   double weight = 70;
   int age;
+  double currency = 0;
 
   final _repository = Repository();
 
@@ -31,15 +32,18 @@ class OnBoardingBloc {
   Sink<int> get pageNavigationSink => _selectedPageBehaviorSubject.sink;
 
   final _errorBehaviorSubject = PublishSubject<String>();
-  Stream<String> get errorStream => _errorBehaviorSubject.stream.asBroadcastStream();
+  Stream<String> get errorStream =>
+      _errorBehaviorSubject.stream.asBroadcastStream();
   Sink<String> get errorSink => _errorBehaviorSubject.sink;
 
   final _selectedWeightBehaviorSubject = PublishSubject<double>();
-  Stream<double> get selectedWeightStream => _selectedWeightBehaviorSubject.stream;
+  Stream<double> get selectedWeightStream =>
+      _selectedWeightBehaviorSubject.stream;
   Sink<double> get selectedWeightSink => _selectedWeightBehaviorSubject.sink;
 
   final _selectedHeightBehaviorSubject = PublishSubject<double>();
-  Stream<double> get selectedHeightStream => _selectedHeightBehaviorSubject.stream;
+  Stream<double> get selectedHeightStream =>
+      _selectedHeightBehaviorSubject.stream;
   Sink<double> get selectedHeightSink => _selectedHeightBehaviorSubject.sink;
 
   final _selectedGenderBehaviorSubject = PublishSubject<int>();
@@ -58,7 +62,8 @@ class OnBoardingBloc {
   void createUser(Store<AppState> store) async {
     double bmi = weight / ((height * 0.01) * (height * 0.01));
 
-    double fatPercentage = (1.20 * bmi) + (0.23 * age) - (10.8 * genderCode) - 5.4;
+    double fatPercentage =
+        (1.20 * bmi) + (0.23 * age) - (10.8 * genderCode) - 5.4;
     String createdDate = DateFormat.yMMMd().format(DateTime.now());
 
     User user = User(
@@ -70,7 +75,8 @@ class OnBoardingBloc {
         bmi: bmi,
         fat_percentage: fatPercentage,
         created_date: createdDate,
-        last_updated: createdDate);
+        last_updated: createdDate,
+        currency: currency);
     WeightHistory weightHistory = WeightHistory(
         weight: weight,
         date: DateFormat.yMMMd().format(DateTime.now()),

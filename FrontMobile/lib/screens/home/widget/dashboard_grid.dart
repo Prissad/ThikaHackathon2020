@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_weighter/global/GlobalColor.dart';
 import 'package:flutter_weighter/model/user.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
 import 'package:flutter_weighter/screens/add_weight/add_weight.dart';
+import 'package:flutter_weighter/screens/add_weight/add_weight_with_id.dart';
 import 'package:flutter_weighter/screens/body_chart/body_chart_page.dart';
 import 'package:flutter_weighter/screens/fat_calculator/fat_calculator_page.dart';
 import 'package:flutter_weighter/screens/home/bloc/bloc_provider.dart';
@@ -22,23 +24,23 @@ class DashboardGrid extends StatelessWidget {
       GridItem([
         Color(0xfff6356f),
         Color(0xffff5f50),
-      ], Icons.add_circle, AppTranslations.of(context).text("update_weight"),
-          AddWeight()),
+      ], Icons.monetization_on,
+          AppTranslations.of(context).text("update_weight"), AddWeight()),
       GridItem([
         Color(0xfff58573),
         Color(0xff5f79f4),
-      ], Icons.trending_down, AppTranslations.of(context).text("history"),
+      ], Icons.trending_up, AppTranslations.of(context).text("history"),
           WeightTrendPage()),
       GridItem([
         Color(0xff52a7ea),
         Color(0xff712e98),
-      ], Icons.insert_chart, AppTranslations.of(context).text("body_chart"),
-          BodyChartPage()),
+      ], Icons.payment, AppTranslations.of(context).text("body_chart"),
+          AddWeightID()),
       GridItem([
         Color(0xff46a3b7),
         Color(0xffa6f1de),
-      ], Icons.dashboard, AppTranslations.of(context).text("fat_calculator"),
-          FatCalculatorPage()),
+      ], Icons.attach_money, AppTranslations.of(context).text("fat_calculator"),
+          AddWeight()),
     ];
 
     return Container(
@@ -76,12 +78,12 @@ class DashboardGrid extends StatelessWidget {
     switch (index) {
       case 0:
         return AppTranslations.of(context).text("add_new_weight");
-      case 1:
-        return '${AppTranslations.of(context).text("weight")}: ${user.weight}';
+      /*case 1:
+        return '${AppTranslations.of(context).text("weight")}: ${user.weight}';*/
       case 2:
-        return '${AppTranslations.of(context).text("ideal_weight")} ${bloc.calculateFatValue(user.gender, user.height)} ${AppTranslations.of(context).text("kg")}';
-      case 3:
-        return '${AppTranslations.of(context).text("bpf_short")}: ${format(user.fat_percentage)} %';
+        return '${AppTranslations.of(context).text("ideal_weight")}'; /* ${bloc.calculateFatValue(user.gender, user.height)} ${AppTranslations.of(context).text("kg")}';*/
+      /*case 3:
+        return '${AppTranslations.of(context).text("bpf_short")}: ${format(user.fat_percentage)} %';*/
       default:
         return '';
     }

@@ -26,6 +26,7 @@ dependencies:
   rxdart: ^0.22.0
   flutter_redux: ^0.5.3
   redux: ^3.0.0
+  dio: ^3.0.9
   flutter_svg: ^0.13.0+2
   flutter_lottie: ^0.2.0
   bezier_chart: ^1.0.8
@@ -34,6 +35,7 @@ dependencies:
   sqflite: ^1.1.6
   path_provider: any
   intl: any
+  rflutter_alert: ^1.0.3
   bubble_tab_indicator: "^0.1.4"
   flutter_localizations:
     sdk: flutter

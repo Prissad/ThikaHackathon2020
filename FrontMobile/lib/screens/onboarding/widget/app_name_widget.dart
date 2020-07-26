@@ -16,15 +16,18 @@ class AppNameWidget extends StatelessWidget {
             return Transform.scale(
               scale: _getScaleOffset(pageOffset),
               child: Transform.translate(
-                offset: Offset(-_getXOffset(pageOffset, MediaQuery.of(context).size.width),
-                    -_getYOffset(pageOffset, MediaQuery.of(context).size.height)),
+                offset: Offset(
+                    -_getXOffset(pageOffset, MediaQuery.of(context).size.width),
+                    -_getYOffset(
+                        pageOffset, MediaQuery.of(context).size.height)),
                 child: Container(
                     margin: EdgeInsets.only(bottom: 10),
                     child: Text(
-                      'WEIGHTER',
+                      'THIKA',
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontSize: MediaQuery.of(context).size.shortestSide * 0.15),
+                          fontSize:
+                              MediaQuery.of(context).size.shortestSide * 0.15),
                       textAlign: TextAlign.center,
                     )),
               ),

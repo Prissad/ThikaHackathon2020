@@ -29,18 +29,16 @@ class ProfileTab extends StatelessWidget {
                 ),
                 EditableSelectionWidget(
                   label: AppTranslations.of(context).text("gender"),
-                  value:
-                      '${bloc.getGenderText(user.gender, AppTranslations.of(context).text("gender_male"), AppTranslations.of(context).text("gender_female"))}',
+                  value: 'test',
                   onPress: null,
                   iconData: null,
                 ),
                 StreamBuilder<int>(
                     stream: bloc.ageSelectionStream,
                     builder: (context, snapshotAge) {
-                      String selectedAge = '${snapshotAge.hasData ? snapshotAge.data : user.age.toInt()}';
                       return EditableSelectionWidget(
                         label: AppTranslations.of(context).text("age"),
-                        value: '$selectedAge ${AppTranslations.of(context).text("years")}',
+                        value: 'test',
                         onPress: () => _editAge(context, user.age + 1),
                         iconData: Icons.add,
                       );
@@ -48,18 +46,20 @@ class ProfileTab extends StatelessWidget {
                 StreamBuilder<int>(
                     stream: bloc.heightSelectionStream,
                     builder: (context, snapshotEdited) {
-                      String currentHeight = '${snapshotEdited.hasData ? snapshotEdited.data : user.height.toInt()}';
                       return EditableSelectionWidget(
                         label: AppTranslations.of(context).text("height"),
-                        value: '$currentHeight ${AppTranslations.of(context).text("cm")}',
+                        value: '4058',
                         onPress: () => _editHeight(
-                            context, bloc.editedHeight == 0 ? user.height.toInt() : bloc.editedHeight.toInt()),
+                            context,
+                            bloc.editedHeight == 0
+                                ? user.height.toInt()
+                                : bloc.editedHeight.toInt()),
                         iconData: Icons.edit,
                       );
                     }),
                 EditableSelectionWidget(
                   label: AppTranslations.of(context).text("weight"),
-                  value: '${user.weight} ${AppTranslations.of(context).text("kg")}',
+                  value: '25',
                   onPress: null,
                   iconData: null,
                 ),
@@ -76,7 +76,8 @@ class ProfileTab extends StatelessWidget {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
               child: DialogContent(
                 title: AppTranslations.of(context).text("add_dialog_title"),
                 child: Padding(
@@ -87,7 +88,8 @@ class ProfileTab extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.w300,
-                            fontSize: MediaQuery.of(context).size.shortestSide * 0.05),
+                            fontSize: MediaQuery.of(context).size.shortestSide *
+                                0.05),
                         textAlign: TextAlign.center,
                       ),
                     )),
@@ -114,7 +116,8 @@ class ProfileTab extends StatelessWidget {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
               child: DialogContent(
                 title: AppTranslations.of(context).text("height_dialog_title"),
                 child: HeightPager(
@@ -126,7 +129,8 @@ class ProfileTab extends StatelessWidget {
                 onNegativeCallBack: () {
                   Navigator.of(context).pop();
                   bloc.heightSelectionSink.add(height);
-                  bloc.focusedHeightPagerSink.add((height - MIN_HEIGHT).toDouble());
+                  bloc.focusedHeightPagerSink
+                      .add((height - MIN_HEIGHT).toDouble());
                 },
                 onPositiveCallback: () {
                   Navigator.of(context).pop();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_weighter/api/api.dart';
 import 'package:flutter_weighter/model/notification_item.dart';
 import 'package:flutter_weighter/redux/app_actions.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
@@ -16,7 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingListTab extends StatelessWidget {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  SettingListTab() : flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  SettingListTab()
+      : flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +28,19 @@ class SettingListTab extends StatelessWidget {
       bodyWidget: ListView(
         children: <Widget>[
           StoreConnector<AppState, NotificationItem>(
-              converter: (Store<AppState> store) => store.state.notificationItem,
-              builder: (BuildContext context, NotificationItem notificationItem) {
+              converter: (Store<AppState> store) =>
+                  store.state.notificationItem,
+              builder:
+                  (BuildContext context, NotificationItem notificationItem) {
                 return _SettingItemWidget(
                   iconData: Icons.notifications_active,
-                  label: AppTranslations.of(context).text("setting_notification"),
+                  label:
+                      AppTranslations.of(context).text("setting_notification"),
                   onPress: () {
                     _editNotificationReminderDialog(context, notificationItem);
                   },
-                  rightLabel: AppTranslations.of(context).text(notificationItem.label),
+                  rightLabel:
+                      AppTranslations.of(context).text(notificationItem.label),
                 );
               }),
           _SettingItemWidget(
@@ -54,7 +60,8 @@ class SettingListTab extends StatelessWidget {
             iconData: Icons.info,
             label: AppTranslations.of(context).text("setting_about"),
             onPress: () {
-              bloc.verticalPagerNavigationSink.add(NAVIGATE_TO_SETTINGS_ABOUT_TAB);
+              bloc.verticalPagerNavigationSink
+                  .add(NAVIGATE_TO_SETTINGS_ABOUT_TAB);
             },
           ),
           _SettingItemWidget(
@@ -79,7 +86,8 @@ class SettingListTab extends StatelessWidget {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
               child: DialogContent(
                 title: AppTranslations.of(context).text("reset_app"),
                 child: Padding(
@@ -90,7 +98,8 @@ class SettingListTab extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.w300,
-                            fontSize: MediaQuery.of(context).size.shortestSide * 0.05),
+                            fontSize: MediaQuery.of(context).size.shortestSide *
+                                0.05),
                         textAlign: TextAlign.center,
                       ),
                     )),
@@ -102,8 +111,10 @@ class SettingListTab extends StatelessWidget {
                 onPositiveCallback: () {
                   bloc.resetApp().then((val) {
                     Navigator.of(context).pop();
+                    CallApi.token = '';
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (BuildContext context) => OnBoardingPage()),
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => OnBoardingPage()),
                       ModalRoute.withName('/'),
                     );
                   });
@@ -121,7 +132,10 @@ class SettingListTab extends StatelessWidget {
     }
   }
 
-  Widget _notificationItem(NotificationItem notificationItem, NotificationItem groupNotificationItem, Function onClick,
+  Widget _notificationItem(
+      NotificationItem notificationItem,
+      NotificationItem groupNotificationItem,
+      Function onClick,
       BuildContext context) {
     return RadioListTile<NotificationItem>(
       title: Text(
@@ -137,14 +151,16 @@ class SettingListTab extends StatelessWidget {
     );
   }
 
-  Future<bool> _editNotificationReminderDialog(BuildContext context, NotificationItem notificationItem) {
+  Future<bool> _editNotificationReminderDialog(
+      BuildContext context, NotificationItem notificationItem) {
     var store = StoreProvider.of<AppState>(context);
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
               child: DialogContent(
                 title: AppTranslations.of(context).text("setting_notification"),
                 child: Padding(
@@ -156,7 +172,8 @@ class SettingListTab extends StatelessWidget {
                       notificationItem,
                       (value) {
                         Navigator.of(context).pop();
-                        store.dispatch(UpdateNotificationReminderAction(notificationItem: value));
+                        store.dispatch(UpdateNotificationReminderAction(
+                            notificationItem: value));
                         _scheduleNotification(value);
                       },
                       context,
@@ -183,9 +200,12 @@ class SettingListTab extends StatelessWidget {
     }
 
     var initializationSettingsAndroid = AndroidInitializationSettings('icon');
-    var initializationSettingsIOS = new IOSInitializationSettings(onDidReceiveLocalNotification: null);
-    var initializationSettings = new InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: null);
+    var initializationSettingsIOS =
+        new IOSInitializationSettings(onDidReceiveLocalNotification: null);
+    var initializationSettings = new InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: null);
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'weighter',
@@ -196,7 +216,8 @@ class SettingListTab extends StatelessWidget {
       ticker: 'ticker',
     );
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
     var time = new Time(18, 0, 0);
 
@@ -254,12 +275,15 @@ class _SettingItemWidget extends StatelessWidget {
             ),
             Text(
               label,
-              style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.04),
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.shortestSide * 0.04),
             ),
             Spacer(),
             Text(
               rightLabel,
-              style: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.04, color: Colors.grey),
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.shortestSide * 0.04,
+                  color: Colors.grey),
             ),
             SizedBox(
               width: 16,

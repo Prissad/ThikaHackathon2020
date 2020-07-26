@@ -23,20 +23,24 @@ class OnBoardingPage extends StatefulWidget {
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> with TickerProviderStateMixin {
+class _OnBoardingPageState extends State<OnBoardingPage>
+    with TickerProviderStateMixin {
   AnimationController _animationController;
   AnimationController _submitAnimationController;
   OnBoardingBloc _bloc;
   PageController _pageController;
 
   Future _navigateToPage(int page) async {
-    _pageController.animateToPage(page, duration: Duration(milliseconds: _submitAnimationTime), curve: Curves.linear);
+    _pageController.animateToPage(page,
+        duration: Duration(milliseconds: _submitAnimationTime),
+        curve: Curves.linear);
   }
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(duration: const Duration(milliseconds: _animationTime), vsync: this);
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: _animationTime), vsync: this);
     _animationController.forward();
     _bloc = OnBoardingBloc();
     _bloc.pageNavigationStream.listen(_navigateToPage);
@@ -51,7 +55,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> with TickerProviderStat
     )..addStatusListener((status) {
         //add a listener
         if (status == AnimationStatus.completed) {
-          Navigator.of(context).pushReplacement(FadeRouteBuilder(page: HomePage()));
+          Navigator.of(context)
+              .pushReplacement(FadeRouteBuilder(page: HomePage()));
         }
       });
   }

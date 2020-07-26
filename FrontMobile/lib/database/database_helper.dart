@@ -14,6 +14,7 @@ final columnBmi = 'bmi';
 final columnFatPercentage = 'fat_percentage';
 final columnCreatedDate = 'created_date';
 final columnLastUpdated = 'last_updated';
+final columnCurrency = 'currency';
 
 final weightHistoryTable = 'weight_history_table';
 final columnHistoryWeight = 'history_weight';
@@ -42,7 +43,8 @@ class DatabaseProvider {
     String path = directory.path + _databaseName;
 
     // Open/create the database at a given path
-    var database = await openDatabase(path, version: _databaseVersion, onCreate: _createDb, onUpgrade: onUpgrade);
+    var database = await openDatabase(path,
+        version: _databaseVersion, onCreate: _createDb, onUpgrade: onUpgrade);
     return database;
   }
 
@@ -62,7 +64,8 @@ class DatabaseProvider {
         '$columnBmi REAL NOT NULL, '
         '$columnFatPercentage REAL NOT NULL, '
         '$columnCreatedDate TEXT NOT NULL, '
-        '$columnLastUpdated TEXT NOT NULL'
+        '$columnLastUpdated TEXT NOT NULL, '
+        '$columnCurrency REAL NOT NULL'
         ')');
 
     await database.execute('CREATE TABLE $weightHistoryTable ( '
@@ -73,5 +76,4 @@ class DatabaseProvider {
         '$columnHistoryTime TEXT NOT NULL'
         ')');
   }
-
 }

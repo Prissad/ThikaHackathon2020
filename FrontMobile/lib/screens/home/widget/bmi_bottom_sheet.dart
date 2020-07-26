@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_weighter/api/api.dart';
+import 'package:flutter_weighter/global/GlobalColor.dart';
 import 'package:flutter_weighter/model/user.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
 import 'package:flutter_weighter/screens/home/bloc/bloc_provider.dart';
@@ -24,13 +26,14 @@ class BMIBottomSheet extends StatefulWidget {
   _BMIBottomSheetState createState() => _BMIBottomSheetState();
 }
 
-class _BMIBottomSheetState extends State<BMIBottomSheet> with SingleTickerProviderStateMixin {
+class _BMIBottomSheetState extends State<BMIBottomSheet>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   double get maxHeight => MediaQuery.of(context).size.height;
 
-  double lerp(double min, double max) =>
-      lerpDouble(min, max, _controller.value); //<-- lerp any value based on the controller
+  double lerp(double min, double max) => lerpDouble(
+      min, max, _controller.value); //<-- lerp any value based on the controller
 
   //to control open close icon
   double get openCloseIconMargin => lerp(0, MediaQuery.of(context).padding.top);
@@ -38,34 +41,42 @@ class _BMIBottomSheetState extends State<BMIBottomSheet> with SingleTickerProvid
   double get openCloseIconSize => lerp(30, 40);
 
   // to control header font and margin
-  double get headerTopMargin =>
-      lerp(MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.1);
+  double get headerTopMargin => lerp(MediaQuery.of(context).size.height * 0.05,
+      MediaQuery.of(context).size.height * 0.1);
 
-  double get headerFontSize =>
-      lerp(MediaQuery.of(context).size.shortestSide * 0.04, MediaQuery.of(context).size.shortestSide * 0.06);
+  double get headerFontSize => lerp(
+      MediaQuery.of(context).size.shortestSide * 0.04,
+      MediaQuery.of(context).size.shortestSide * 0.06);
 
   // to control subheader font and margin
-  double get subheaderTopMargin => lerp(50, MediaQuery.of(context).size.height * 0.15);
+  double get subheaderTopMargin =>
+      lerp(50, MediaQuery.of(context).size.height * 0.15);
 
-  double get subheaderFontSize => lerp(0, MediaQuery.of(context).size.shortestSide * 0.05);
+  double get subheaderFontSize =>
+      lerp(0, MediaQuery.of(context).size.shortestSide * 0.05);
 
   // to control BMI text
-  double get bmiFontSize =>
-      lerp(MediaQuery.of(context).size.shortestSide * 0.08, MediaQuery.of(context).size.shortestSide * 0.15);
+  double get bmiFontSize => lerp(
+      MediaQuery.of(context).size.shortestSide * 0.08,
+      MediaQuery.of(context).size.shortestSide * 0.15);
 
   double get bmiTopMargin => lerp(
-      MediaQuery.of(context).size.height * 0.05 - MediaQuery.of(context).size.shortestSide * 0.04,
+      MediaQuery.of(context).size.height * 0.05 -
+          MediaQuery.of(context).size.shortestSide * 0.04,
       MediaQuery.of(context).size.height * 0.5);
 
-  double get bmiRightMargin => lerp(0, (MediaQuery.of(context).size.width - 64) / 4);
+  double get bmiRightMargin =>
+      lerp(0, (MediaQuery.of(context).size.width - 64) / 4);
 
   // to control BMI Unit text
-  double get unitFontSize =>
-      lerp(MediaQuery.of(context).size.shortestSide * 0.03, MediaQuery.of(context).size.shortestSide * 0.05);
+  double get unitFontSize => lerp(
+      MediaQuery.of(context).size.shortestSide * 0.03,
+      MediaQuery.of(context).size.shortestSide * 0.05);
 
   // to control BMI range
-  double get rangeTextFontSize =>
-      lerp(MediaQuery.of(context).size.shortestSide * 0.04, MediaQuery.of(context).size.shortestSide * 0.06);
+  double get rangeTextFontSize => lerp(
+      MediaQuery.of(context).size.shortestSide * 0.04,
+      MediaQuery.of(context).size.shortestSide * 0.06);
 
   // to control container radius
   double get containerRadius => lerp(32, 0);
@@ -98,20 +109,26 @@ class _BMIBottomSheetState extends State<BMIBottomSheet> with SingleTickerProvid
             bottom: 0,
             child: StreamBuilder<double>(
                 stream: HomeBlocProvider.of(context).mainPagerStream,
-                builder: (BuildContext buildContext, AsyncSnapshot<double> snapshot) {
+                builder: (BuildContext buildContext,
+                    AsyncSnapshot<double> snapshot) {
                   double pageOffset = snapshot.hasData ? snapshot.data : 0.0;
                   double elevation = pageOffset > 0 ? 0 : 1 - pageOffset;
                   return Transform.translate(
-                    offset: Offset(0, getYOffset(pageOffset, MediaQuery.of(context).size.height)),
+                    offset: Offset(
+                        0,
+                        getYOffset(
+                            pageOffset, MediaQuery.of(context).size.height)),
                     child: GestureDetector(
                       onTap: _toggle,
                       onVerticalDragUpdate: _handleDragUpdate,
                       onVerticalDragEnd: _handleDragEnd,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 16.0),
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(containerRadius)),
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(containerRadius)),
                         ),
                         child: Stack(
                           children: <Widget>[
@@ -169,9 +186,11 @@ class _BMIBottomSheetState extends State<BMIBottomSheet> with SingleTickerProvid
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (_controller.isAnimating || _controller.status == AnimationStatus.completed) return;
+    if (_controller.isAnimating ||
+        _controller.status == AnimationStatus.completed) return;
 
-    final double flingVelocity = details.velocity.pixelsPerSecond.dy / maxHeight;
+    final double flingVelocity =
+        details.velocity.pixelsPerSecond.dy / maxHeight;
     if (flingVelocity < 0.0)
       _controller.fling(velocity: math.max(2.0, -flingVelocity));
     else if (flingVelocity > 0.0)
@@ -185,7 +204,9 @@ class OpenCloseIcon extends StatelessWidget {
   final double iconSize;
   final double topMargin;
 
-  const OpenCloseIcon({Key key, @required this.iconSize, @required this.topMargin}) : super(key: key);
+  const OpenCloseIcon(
+      {Key key, @required this.iconSize, @required this.topMargin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +227,11 @@ class SheetSubHeader extends StatelessWidget {
   final double topMargin;
   final double opacity;
 
-  const SheetSubHeader({Key key, @required this.fontSize, @required this.topMargin, @required this.opacity})
+  const SheetSubHeader(
+      {Key key,
+      @required this.fontSize,
+      @required this.topMargin,
+      @required this.opacity})
       : super(key: key);
 
   @override
@@ -234,7 +259,9 @@ class SheetHeader extends StatelessWidget {
   final double fontSize;
   final double topMargin;
 
-  const SheetHeader({Key key, @required this.fontSize, @required this.topMargin}) : super(key: key);
+  const SheetHeader(
+      {Key key, @required this.fontSize, @required this.topMargin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -269,12 +296,14 @@ class BMIRangeText extends StatelessWidget {
       child: Opacity(
         opacity: opacity,
         child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.8),
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.8),
           child: StoreConnector<AppState, User>(
             converter: (Store<AppState> store) => store.state.user,
             builder: (BuildContext context, User user) {
               return Text(
-                AppTranslations.of(context).text(getBMIRangeString(user.bmi)),
+                "Thank you for using our services",
+                //AppTranslations.of(context).text(getBMIRangeString(user.bmi)),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -290,12 +319,13 @@ class BMIRangeText extends StatelessWidget {
   }
 
   String getBMIRangeString(double userBmi) {
-    for (var idealBMI in idealBMIList) {
+    return "Thank you for using our services";
+    /*for (var idealBMI in idealBMIList) {
       if (idealBMI.start < userBmi && idealBMI.end > userBmi) {
         return idealBMI.label;
       }
     }
-    return '';
+    return '';*/
   }
 
   String getBMIRangeColor(double userBmi) {
@@ -313,8 +343,25 @@ class BMIText extends StatelessWidget {
   final double topMargin;
   final double rightMargin;
 
-  const BMIText({Key key, @required this.fontSize, @required this.topMargin, @required this.rightMargin})
+  const BMIText(
+      {Key key,
+      @required this.fontSize,
+      @required this.topMargin,
+      @required this.rightMargin})
       : super(key: key);
+
+  Future<double> getFutureMoney() async {
+    var res = await CallApi().getData('/loan');
+    var money = (res.data)['user']['balance'];
+    return money;
+  }
+
+  double getMoney() {
+    getFutureMoney().then((result) {
+      return result;
+    });
+    return 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +372,7 @@ class BMIText extends StatelessWidget {
         converter: (Store<AppState> store) => store.state.user,
         builder: (BuildContext context, User user) {
           return Text(
-            format(user.bmi),
+            format(/*user.currency*/ getMoney()),
             style: TextStyle(
               color: Colors.white,
               fontSize: fontSize,
@@ -355,7 +402,8 @@ class UnitText extends StatelessWidget {
       child: Opacity(
         opacity: opacity,
         child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
           child: Text(
             AppTranslations.of(context).text("bmi_unit"),
             style: TextStyle(
