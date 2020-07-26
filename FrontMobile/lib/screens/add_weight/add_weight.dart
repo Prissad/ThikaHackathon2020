@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_weighter/api/api.dart';
 import 'package:flutter_weighter/model/user.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
+import 'package:flutter_weighter/screens/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter_weighter/utility/color_utility.dart';
 import 'package:flutter_weighter/utility/translation/app_translations.dart';
 import 'package:flutter_weighter/widget/base_sliver_header.dart';
@@ -161,6 +162,7 @@ class _UpdateButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 24.0),
         child: RoundedButton(
           onPressed: () async {
+            OnBoardingBloc.currency += 150;
             Map<String, dynamic> data = new Map<String, dynamic>();
             data = {
               'amount': nameController.text,

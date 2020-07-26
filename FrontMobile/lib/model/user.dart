@@ -20,7 +20,7 @@ class User {
   double fat_percentage;
   String created_date;
   String last_updated;
-  double currency = 200;
+  double currency;
 
   User(
       {this.name,

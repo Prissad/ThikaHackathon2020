@@ -19,7 +19,7 @@ class OnBoardingBloc {
   double height = 154;
   double weight = 70;
   int age;
-  double currency = 0;
+  static double currency = 1000;
 
   final _repository = Repository();
 

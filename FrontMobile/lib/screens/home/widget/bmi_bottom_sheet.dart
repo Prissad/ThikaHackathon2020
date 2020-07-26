@@ -8,6 +8,7 @@ import 'package:flutter_weighter/global/GlobalColor.dart';
 import 'package:flutter_weighter/model/user.dart';
 import 'package:flutter_weighter/redux/app_state.dart';
 import 'package:flutter_weighter/screens/home/bloc/bloc_provider.dart';
+import 'package:flutter_weighter/screens/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter_weighter/utility/constants.dart';
 import 'package:flutter_weighter/utility/text_utility.dart';
 import 'package:flutter_weighter/utility/translation/app_translations.dart';
@@ -372,7 +373,7 @@ class BMIText extends StatelessWidget {
         converter: (Store<AppState> store) => store.state.user,
         builder: (BuildContext context, User user) {
           return Text(
-            format(/*user.currency*/ getMoney()),
+            OnBoardingBloc.currency.toString(),
             style: TextStyle(
               color: Colors.white,
               fontSize: fontSize,
