@@ -12,3 +12,6 @@ Contains the Frontend for the Web part
 
 ## FrontMobile  
 Contains the Frontend for the Mobile part  
+
+## Model
+Contains the model for the machine learning part
